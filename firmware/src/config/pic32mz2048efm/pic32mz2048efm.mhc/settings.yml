@@ -1,0 +1,14 @@
+configName: pic32mz2048efm
+folderName: GHA_App_EFM
+format_version: v1.0
+frameworkPath: ..\..\..\microchip\H3
+processor: PIC32MZ2048EFM144
+projectName: GHA_App_EFM
+settings:
+  PackageFilter: bootloader;bootloader_apps_ethernet;bootloader_apps_sdcard;bootloader_apps_serial_memory;bootloader_apps_uart;bootloader_apps_usb;bsp;core;core_apps_pic32mz_da;core_apps_pic32mz_ef;core_apps_pic32mz_w1;crypto;cryptoauthlib;csp;csp_apps_pic32mz_da;csp_apps_pic32mz_ef;dev_packs;net;net_apps_pic32mz;quick_docs;reference_apps;usb;usb_apps_device;usb_apps_dual_role;usb_apps_host;usb_apps_multi_controller;wireless_apps_pic32mzw1_wfi32e01;wireless_apps_winc1500;wireless_apps_winc3400;wireless_system_pic32mzw1_wfi32e01;wireless_wifi;x2c
+  FORCE_OPTIMIZATION: 'false'
+  GENERATE_BACKUP: 'true'
+  TRUSTZONE: 'false'
+  CMSISPath: .\dev_packs\arm\CMSIS\5.8.0
+  MERGE_STRATEGY: USER_ALL
+  DFPPath: .\dev_packs\Microchip\PIC32MZ-EF_DFP\1.3.58\atdf\PIC32MZ2048EFM144.atdf

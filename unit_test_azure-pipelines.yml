@@ -1,0 +1,35 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger: none
+pool:
+  vmImage: ubuntu-latest
+steps :
+  - checkout: self 
+    submodules: recursive  
+  - script : |
+      sudo dpkg --add-architecture i386
+      sudo apt-get update -yq && sudo apt-get upgrade -yq
+      sudo apt-get install -y build-essential lib32z1 libc6:i386 libx11-6:i386 libxext6:i386 libstdc++6:i386 libexpat1:i386 wget ruby
+      sudo gem install ceedling
+      wget --progress=dot:giga https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/MPLABX-v6.00-linux-installer.tar
+      tar -xvf MPLABX-v6.00-linux-installer.tar
+      rm -f MPLABX-v6.00-linux-installer.tar
+      sudo ./MPLABX-v6.00-linux-installer.sh --nox11 -- --unattendedmodeui none --mode unattended
+      rm -f MPLABX-v6.00-linux-installer.sh
+      wget --progress=dot:giga https://ww1.microchip.com/downloads/en/DeviceDoc/xc32-v4.00-full-install-linux-installer.run
+      chmod +x xc32-v4.00-full-install-linux-installer.run
+      sudo ./xc32-v4.00-full-install-linux-installer.run --mode unattended --unattendedmodeui none --netservername localhost --LicenseType FreeMode
+      rm ./xc32-v4.00-full-install-linux-installer.run
+      pwd
+    displayName: install tool chain
+  - script : |
+      cd firmware
+      ceedling test:all
+    displayName: run unit tests
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: firmware/build/artifacts/test/report.xml

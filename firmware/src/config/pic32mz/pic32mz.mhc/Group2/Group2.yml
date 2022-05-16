@@ -1,0 +1,6 @@
+format_version: v1.0
+type: GroupComponent
+attributes: {displayName: UART Ports, id: Group2}
+children:
+- type: ElementPosition
+  attributes: {x: '537', y: '142', id: Group2}

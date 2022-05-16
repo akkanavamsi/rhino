@@ -1,0 +1,6 @@
+format_version: v1.0
+type: GroupComponent
+attributes: {displayName: USB Ports, id: Group3}
+children:
+- type: ElementPosition
+  attributes: {x: '539', y: '199', id: Group3}

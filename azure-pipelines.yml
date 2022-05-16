@@ -1,0 +1,41 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps :
+- script : sudo apt-get update
+- script : sudo apt-get upgrade -y
+- script : sudo apt-get dist-upgrade -y
+- script : sudo dpkg --add-architecture i386
+- script : sudo apt-get update
+- script : sudo apt-get install -y libc6-i386
+- script : sudo apt-get install -y libx11-6
+- script : sudo apt-get install -y libexpat-dev:i386
+- script : sudo apt-get install -y libxext6:i386
+- script : sudo apt-get install -y libstdc++6:i386
+- script : sudo apt-get install -y libexpat1:i386
+- script : mkdir ../install-dependencies
+- script : cd ../install-dependencies
+- script : wget http://ww1.microchip.com/downloads/en/DeviceDoc/MPLABX-v3.15-linux-installer.tar
+- script : tar -xvf MPLABX-v3.15-linux-installer.tar
+- script : sudo ./MPLABX-v3.15-linux-installer.sh -- --mode unattended
+- script : sudo apt install wget -y
+- script : wget https://www.microchip.com/content/dam/mchp/documents/DEV/ProductDocuments/SoftwareTools/xc32-v3.01-full-install-linux-installer.run
+- script : chmod +x xc32-v3.01-full-install-linux-installer.run
+- script : sudo ./xc32-v3.01-full-install-linux-installer.run --mode unattended --netservername dontknow
+- script : wget https://github.com/Kitware/CMake/releases/download/v3.23.0/cmake-3.23.0.tar.gz
+- script : tar -xvf cmake-3.23.0.tar.gz
+- script : /opt/microchip/mplabx/v3.15/mplab_ide/bin/prjMakefilesGenerator.sh ./firmware/GHG_App_EFG.X
+- script : /opt/microchip/mplabx/v3.15/mplab_ide/bin/prjMakefilesGenerator.sh ./firmware/GHA_App_EFM.X
+- script : make -f ./firmware/GHG_App_EFG.X/nbproject/Makefile-genesis.properties
+- script : make -f ./firmware/GHG_App_EFG.X/nbproject/Makefile-impl.mk
+- script : make -f ./firmware/GHG_App_EFG.X/nbproject/Makefile-local-pic32mz2048efm.mk
+- script : make -f ./firmware/GHG_App_EFG.X/nbproject/Makefile-pic32mz2048efm.mk
+- script : make -f ./firmware/GHA_App_EFM.X/nbproject/Makefile-variables.mk

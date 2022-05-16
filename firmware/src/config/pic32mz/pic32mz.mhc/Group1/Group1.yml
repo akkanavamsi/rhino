@@ -1,0 +1,6 @@
+format_version: v1.0
+type: GroupComponent
+attributes: {displayName: SPI Ports, id: Group1}
+children:
+- type: ElementPosition
+  attributes: {x: '539', y: '80', id: Group1}
